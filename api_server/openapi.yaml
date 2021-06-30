@@ -33,7 +33,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Department"
+                  $ref: "#/components/schemas/DepartmentResponse"
           links:
             GetManagerByEmployeeNumber:
               $ref: "#/components/links/GetManagerByEmployeeNumber"
@@ -194,7 +194,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Employee"
+                  $ref: "#/components/schemas/EmployeeResponse"
           links:
             GetEmployeeDepartmentByDepartmentNumber:
               $ref: "#/components/links/GetEmployeeDepartmentByDepartmentNumber"
@@ -350,7 +350,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Employee"
+                  $ref: "#/components/schemas/EmployeeResponse"
           links:
             GetEmployeeDepartmentByDepartmentNumber:
               $ref: "#/components/links/GetEmployeeDepartmentByDepartmentNumber"
@@ -406,7 +406,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/EmployeeFunction"
+                  $ref: "#/components/schemas/EmployeeFunctionResponse"
           links:
             GetEmployeeDepartmentByDepartmentNumber:
               $ref: "#/components/links/GetEmployeeDepartmentByDepartmentNumber"
@@ -461,7 +461,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Function"
+                  $ref: "#/components/schemas/FunctionResponse"
           links:
             GetManagerByEmployeeNumber:
               $ref: "#/components/links/GetManagerByEmployeeNumber"
@@ -724,6 +724,45 @@ components:
         name: Department 24
         parent_id: 23
         started_at: "2021-01-01T00:00:00Z"
+    DepartmentResponse:
+      example:
+        status: Success
+        page_size: 50
+        next_cursor: eee028e4-ef38-40fb-a92b-41c441660d2e
+        results:
+          - _links:
+              _self:
+                href: "$url/departments/24"
+              manager:
+                href: "$url/employees/2345"
+              employees:
+                href: "$url/departments/24/employees"
+              parent:
+                href: "$url/departments/23"
+            ended_at: null
+            id: 24
+            layer: 1
+            manager_number: 2345
+            name: Department 24
+            parent_id: 23
+            started_at: "2021-01-01T00:00:00Z"
+      properties:
+        status:
+          description: The request status.
+          type: string
+        page_size:
+          description: The current page size
+          format: int32
+          type: integer
+        next_cursor:
+          description: The next query cursor
+          type: string
+          format: byte
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Department'
+      type: object
     Employee:
       title: Employee
       description: Employee information
@@ -811,6 +850,76 @@ components:
           started_at: "2021-01-01T00:00:00Z"
           type: 9
         upn: "random@recognize.nl"
+    EmployeeResponse:
+      example:
+        status: Success
+        page_size: 50
+        next_cursor: eee028e4-ef38-40fb-a92b-41c441660d2e
+        results:
+          - _links:
+              _self:
+                href: "$url/employees/1234"
+              department:
+                href: "$url/departments/24"
+              manager:
+                href: "$url/employees/2345"
+              reports:
+                href: "$url/employees/1234/reports"
+              functions:
+                href: "$url/employees/1234/functions"
+            department:
+              _links:
+                _self:
+                  href: "$url/departments/24"
+                manager:
+                  href: "$url/employees/2345"
+                employees:
+                  href: "$url/departments/24/employees"
+                parent:
+                  href: "$url/departments/23"
+              ended_at: null
+              id: 24
+              layer: 1
+              manager_number: 2345
+              name: Department 24
+              parent_id: 23
+              started_at: "2021-01-01T00:00:00Z"
+            employee_number: 1234
+            first_name: John
+            last_name: Doe
+            mail: "random@recognize.nl"
+            function:
+              _links:
+                _self:
+                  href: "$url/employees/1234"
+                manager:
+                  href: "$url/employees/2345"
+                function:
+                  href: "$url/functions/123456789"
+              ended_at: null
+              id: 123456789
+              manager_number: 2345
+              name: Function
+              started_at: "2021-01-01T00:00:00Z"
+              type: 9
+            upn: "random@recognize.nl"
+      properties:
+        status:
+          description: The request status.
+          type: string
+        page_size:
+          description: The current page size
+          format: int32
+          type: integer
+        next_cursor:
+          description: The next query cursor
+          type: string
+          format: byte
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Employee'
+      type: object
     EmployeeFunction:
       title: Employee function
       description: Employee Function
@@ -859,6 +968,42 @@ components:
         name: Function
         started_at: "2021-01-01T00:00:00Z"
         type: 9
+    EmployeeFunctionResponse:
+      example:
+        status: Success
+        page_size: 50
+        next_cursor: eee028e4-ef38-40fb-a92b-41c441660d2e
+        results:
+          - _links:
+              _self:
+                href: "$url/employees/1234"
+              manager:
+                href: "$url/employees/2345"
+              function:
+                href: "$url/functions/123456789"
+            ended_at: null
+            id: 123456789
+            manager_number: 2345
+            name: Function
+            started_at: "2021-01-01T00:00:00Z"
+            type: 9
+      properties:
+        status:
+          description: The request status.
+          type: string
+        page_size:
+          description: The current page size
+          format: int32
+          type: integer
+        next_cursor:
+          description: The next query cursor
+          type: string
+          format: byte
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmployeeFunction'
+      type: object
     Function:
       title: Function
       description: Function
@@ -887,6 +1032,35 @@ components:
         id: 123456789
         name: Function
         type: 9
+    FunctionResponse:
+      example:
+        status: Success
+        page_size: 50
+        next_cursor: eee028e4-ef38-40fb-a92b-41c441660d2e
+        results:
+          - _links:
+              _self:
+                href: "$url/functions/123456789"
+            id: 123456789
+            name: Function
+            type: 9
+      properties:
+        status:
+          description: The request status.
+          type: string
+        page_size:
+          description: The current page size
+          format: int32
+          type: integer
+        next_cursor:
+          description: The next query cursor
+          type: string
+          format: byte
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Function'
+      type: object
     HttpLink:
       description: A base type of objects representing links to resources.
       type: object
